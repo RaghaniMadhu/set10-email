@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MailsContext } from "../contexts/MailsContext";
 
 export default function Inbox() {
   const {
-    mails: { emails, spamMails, trashMails },
+    mails: { emails },
     dispatch,
   } = useContext(MailsContext);
 
@@ -14,12 +14,48 @@ export default function Inbox() {
     0
   );
 
-  console.log(spamMails, trashMails);
+  const [applyFilters, setApplyFilters] = useState({
+    showOnlyUnreadMails: false,
+    showOnlyStarredMails: false,
+  });
+
+  const unReadMails = applyFilters.showOnlyUnreadMails
+    ? emails.filter(({ unread }) => unread)
+    : emails;
+  const filteredMails = applyFilters.showOnlyStarredMails
+    ? unReadMails.filter(({ isStarred }) => isStarred)
+    : unReadMails;
 
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>MadhuRaghani's Mail Box</h1>
-      <div>Filters</div>
+      <div>
+        Filters:
+        <label>
+          <input
+            type="checkbox"
+            onChange={(event) => {
+              setApplyFilters({
+                ...applyFilters,
+                showOnlyUnreadMails: event.target.checked,
+              });
+            }}
+          />
+          Show Unread Mails
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(event) => {
+              setApplyFilters({
+                ...applyFilters,
+                showOnlyStarredMails: event.target.checked,
+              });
+            }}
+          />
+          Show Starred Mails
+        </label>
+      </div>
       <p>Unread: {unReadMailsCount}</p>
       <div
         style={{
@@ -28,7 +64,7 @@ export default function Inbox() {
           flexDirection: "column",
         }}
       >
-        {emails.map(({ mId, unread, isStarred, subject, content }) => (
+        {filteredMails.map(({ mId, unread, isStarred, subject, content }) => (
           <div
             key={mId}
             style={{

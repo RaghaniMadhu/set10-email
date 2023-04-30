@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MailsContext } from "../contexts/MailsContext";
@@ -9,12 +9,48 @@ function TrashMails() {
     dispatch,
   } = useContext(MailsContext);
 
-  // TODO: Implement filters to show unread emails and to show starred emails with the help of checkbox. Initially these checkboxes should not be selected. in all 3tabs
+  const [applyFilters, setApplyFilters] = useState({
+    showOnlyUnreadMails: false,
+    showOnlyStarredMails: false,
+  });
+
+  const unReadMails = applyFilters.showOnlyUnreadMails
+    ? trashMails.filter(({ unread }) => unread)
+    : trashMails;
+  const filteredMails = applyFilters.showOnlyStarredMails
+    ? unReadMails.filter(({ isStarred }) => isStarred)
+    : unReadMails;
 
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>MadhuRaghani's Mail Box</h1>
-      <div>Filters</div>
+      <div>
+        Filters:
+        <label>
+          <input
+            type="checkbox"
+            onChange={(event) => {
+              setApplyFilters({
+                ...applyFilters,
+                showOnlyUnreadMails: event.target.checked,
+              });
+            }}
+          />
+          Show Unread Mails
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(event) => {
+              setApplyFilters({
+                ...applyFilters,
+                showOnlyStarredMails: event.target.checked,
+              });
+            }}
+          />
+          Show Starred Mails
+        </label>
+      </div>
       <div
         style={{
           display: "flex",
@@ -22,7 +58,7 @@ function TrashMails() {
           flexDirection: "column",
         }}
       >
-        {trashMails.map(({ mId, unread, isStarred, subject, content }) => (
+        {filteredMails.map(({ mId, unread, isStarred, subject, content }) => (
           <div
             key={mId}
             style={{
