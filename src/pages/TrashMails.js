@@ -31,14 +31,17 @@ function TrashMails() {
               margin: "5px",
               padding: "3px",
               borderRadius: "5px",
-              backgroundColor: unread ? "lightgray" : "",
+              backgroundColor: unread ? "" : "lightgray",
             }}
           >
             <h3>Subject: {subject}</h3>
             <p>{content}</p>
             <button
               onClick={() => {
-                dispatch({ type: "STAR_UNSTAR_MAIL_IN_SPAM", payload: mId });
+                dispatch({
+                  type: "STAR_UNSTAR_MAIL",
+                  payload: { mId, from: "trashMails" },
+                });
               }}
             >
               {isStarred ? "Unstar" : "Star"}
@@ -46,7 +49,10 @@ function TrashMails() {
             <Link to={"/mail/" + mId}>
               <button
                 onClick={() => {
-                  dispatch({ type: "VIEW_DETAILS_OF_MAIL", payload: mId });
+                  dispatch({
+                    type: "VIEW_DETAILS_OF_MAIL",
+                    payload: { mId, from: "trashMails" },
+                  });
                 }}
               >
                 View Details
@@ -54,7 +60,10 @@ function TrashMails() {
             </Link>
             <button
               onClick={() => {
-                dispatch({ type: "READ_UNREAD_MAIL_IN_TRASH", payload: mId });
+                dispatch({
+                  type: "READ_UNREAD_MAIL",
+                  payload: { mId, from: "trashMails" },
+                });
               }}
             >
               Mark as {unread ? "Read" : "Unread"}

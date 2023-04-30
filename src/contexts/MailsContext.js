@@ -7,25 +7,27 @@ const MailsContextProvider = ({ children }) => {
   const reducerFunction = (mails, action) => {
     switch (action.type) {
       case "STAR_UNSTAR_MAIL": {
-        const modifiedEmails = mails.emails.map((eachMail) =>
-          eachMail.mId === action.payload
+        const modifiedEmails = mails[action.payload.from].map((eachMail) =>
+          eachMail.mId === action.payload.mId
             ? { ...eachMail, isStarred: !eachMail.isStarred }
             : eachMail
         );
-        return { ...mails, emails: modifiedEmails };
+        return { ...mails, [action.payload.from]: modifiedEmails };
       }
       case "READ_UNREAD_MAIL": {
-        const modifiedEmails = mails.emails.map((eachMail) =>
-          eachMail.mId === action.payload
+        const modifiedEmails = mails[action.payload.from].map((eachMail) =>
+          eachMail.mId === action.payload.mId
             ? { ...eachMail, unread: !eachMail.unread }
             : eachMail
         );
-        return { ...mails, emails: modifiedEmails };
+        return { ...mails, [action.payload.from]: modifiedEmails };
       }
       case "MARK_AS_SPAM": {
-        const spamMail = mails.emails.find(({ mId }) => mId === action.payload);
+        const spamMail = mails.emails.find(
+          ({ mId }) => mId === action.payload.mId
+        );
         const modifiedEmails = mails.emails.filter(
-          ({ mId }) => mId !== action.payload
+          ({ mId }) => mId !== action.payload.mId
         );
         return {
           ...mails,
@@ -35,10 +37,10 @@ const MailsContextProvider = ({ children }) => {
       }
       case "DELETE_MAIL": {
         const deletedMail = mails.emails.find(
-          ({ mId }) => mId === action.payload
+          ({ mId }) => mId === action.payload.mId
         );
         const modifiedEmails = mails.emails.filter(
-          ({ mId }) => mId !== action.payload
+          ({ mId }) => mId !== action.payload.mId
         );
         return {
           ...mails,
@@ -47,7 +49,9 @@ const MailsContextProvider = ({ children }) => {
         };
       }
       case "VIEW_DETAILS_OF_MAIL": {
-        const mail = mails.emails.find(({ mId }) => mId === action.payload);
+        const mail = mails[action.payload.from].find(
+          ({ mId }) => mId === action.payload.mId
+        );
         return { ...mails, requiredMail: mail };
       }
       default:

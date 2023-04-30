@@ -36,14 +36,17 @@ export default function Inbox() {
               margin: "5px",
               padding: "3px",
               borderRadius: "5px",
-              backgroundColor: unread ? "lightgray" : "",
+              backgroundColor: unread ? "" : "lightgray",
             }}
           >
             <h3>Subject: {subject}</h3>
             <p>{content}</p>
             <button
               onClick={() => {
-                dispatch({ type: "STAR_UNSTAR_MAIL", payload: mId });
+                dispatch({
+                  type: "STAR_UNSTAR_MAIL",
+                  payload: { mId, from: "emails" },
+                });
               }}
             >
               {isStarred ? "Unstar" : "Star"}
@@ -51,7 +54,10 @@ export default function Inbox() {
             <Link to={"/mail/" + mId}>
               <button
                 onClick={() => {
-                  dispatch({ type: "VIEW_DETAILS_OF_MAIL", payload: mId });
+                  dispatch({
+                    type: "VIEW_DETAILS_OF_MAIL",
+                    payload: { mId, from: "emails" },
+                  });
                 }}
               >
                 View Details
@@ -59,21 +65,30 @@ export default function Inbox() {
             </Link>
             <button
               onClick={() => {
-                dispatch({ type: "DELETE_MAIL", payload: mId });
+                dispatch({
+                  type: "DELETE_MAIL",
+                  payload: { mId, from: "emails" },
+                });
               }}
             >
               Delete
             </button>
             <button
               onClick={() => {
-                dispatch({ type: "READ_UNREAD_MAIL", payload: mId });
+                dispatch({
+                  type: "READ_UNREAD_MAIL",
+                  payload: { mId, from: "emails" },
+                });
               }}
             >
               Mark as {unread ? "Read" : "Unread"}
             </button>
             <button
               onClick={() => {
-                dispatch({ type: "MARK_AS_SPAM", payload: mId });
+                dispatch({
+                  type: "MARK_AS_SPAM",
+                  payload: { mId, from: "emails" },
+                });
               }}
             >
               Report Spam

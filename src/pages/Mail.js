@@ -14,7 +14,7 @@ function Mail() {
           margin: "5px",
           padding: "3px",
           borderRadius: "5px",
-          backgroundColor: requiredMail?.unread ? "lightgray" : "",
+          backgroundColor: requiredMail.unread ? "" : "lightgray",
         }}
       >
         <h3>Subject: {requiredMail?.subject}</h3>

@@ -30,14 +30,17 @@ function SpamMails() {
               margin: "5px",
               padding: "3px",
               borderRadius: "5px",
-              backgroundColor: unread ? "lightgray" : "",
+              backgroundColor: unread ? "" : "lightgray",
             }}
           >
             <h3>Subject: {subject}</h3>
             <p>{content}</p>
             <button
               onClick={() => {
-                dispatch({ type: "STAR_UNSTAR_MAIL_IN_SPAM", payload: mId });
+                dispatch({
+                  type: "STAR_UNSTAR_MAIL",
+                  payload: { mId, from: "spamMails" },
+                });
               }}
             >
               {isStarred ? "Unstar" : "Star"}
@@ -45,7 +48,10 @@ function SpamMails() {
             <Link to={"/mail/" + mId}>
               <button
                 onClick={() => {
-                  dispatch({ type: "VIEW_DETAILS_OF_MAIL", payload: mId });
+                  dispatch({
+                    type: "VIEW_DETAILS_OF_MAIL",
+                    payload: { mId, from: "spamMails" },
+                  });
                 }}
               >
                 View Details
@@ -53,7 +59,10 @@ function SpamMails() {
             </Link>
             <button
               onClick={() => {
-                dispatch({ type: "READ_UNREAD_MAIL_IN_SPAM", payload: mId });
+                dispatch({
+                  type: "READ_UNREAD_MAIL",
+                  payload: { mId, from: "spamMails" },
+                });
               }}
             >
               Mark as {unread ? "Read" : "Unread"}
