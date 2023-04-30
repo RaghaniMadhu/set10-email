@@ -9,7 +9,6 @@ function TrashMails() {
     dispatch,
   } = useContext(MailsContext);
 
-  // TODO: define all the types of actions in dispatch
   // TODO: Implement filters to show unread emails and to show starred emails with the help of checkbox. Initially these checkboxes should not be selected. in all 3tabs
 
   return (
@@ -70,7 +69,14 @@ function TrashMails() {
             </button>
             <button
               onClick={() => {
-                dispatch({ type: "DELETE_PERMANENTLY", payload: mId });
+                dispatch({ type: "RESTORE_DELETED_MAIL", payload: { mId } });
+              }}
+            >
+              Restore
+            </button>
+            <button
+              onClick={() => {
+                dispatch({ type: "DELETE_PERMANENTLY", payload: { mId } });
               }}
             >
               Delete Permanently

@@ -35,17 +35,49 @@ const MailsContextProvider = ({ children }) => {
           emails: modifiedEmails,
         };
       }
-      case "DELETE_MAIL": {
-        const deletedMail = mails.emails.find(
+      case "MARK_AS_NOT_SPAM": {
+        const notSpamMail = mails.spamMails.find(
           ({ mId }) => mId === action.payload.mId
         );
-        const modifiedEmails = mails.emails.filter(
+        const modifiedSpamEmails = mails.spamMails.filter(
+          ({ mId }) => mId !== action.payload.mId
+        );
+        return {
+          ...mails,
+          spamMails: modifiedSpamEmails,
+          emails: [...mails.emails, notSpamMail],
+        };
+      }
+      case "DELETE_MAIL": {
+        const deletedMail = mails[action.payload.from].find(
+          ({ mId }) => mId === action.payload.mId
+        );
+        const modifiedEmails = mails[action.payload.from].filter(
           ({ mId }) => mId !== action.payload.mId
         );
         return {
           ...mails,
           trashMails: [...mails.trashMails, deletedMail],
-          emails: modifiedEmails,
+          [action.payload.from]: modifiedEmails,
+        };
+      }
+      case "DELETE_PERMANENTLY": {
+        const trashMailsModified = mails.trashMails.filter(
+          ({ mId }) => mId !== action.payload.mId
+        );
+        return { ...mails, trashMails: trashMailsModified };
+      }
+      case "RESTORE_DELETED_MAIL": {
+        const restoreMail = mails.trashMails.find(
+          ({ mId }) => mId === action.payload.mId
+        );
+        const trashMailsModified = mails.trashMails.filter(
+          ({ mId }) => mId !== action.payload.mId
+        );
+        return {
+          ...mails,
+          emails: [...mails.emails, restoreMail],
+          trashMails: trashMailsModified,
         };
       }
       case "VIEW_DETAILS_OF_MAIL": {

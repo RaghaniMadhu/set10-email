@@ -9,8 +9,6 @@ function SpamMails() {
     dispatch,
   } = useContext(MailsContext);
 
-  // TODO: define all the types of actions in dispatch
-
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>MadhuRaghani's Mail Box</h1>
@@ -69,10 +67,20 @@ function SpamMails() {
             </button>
             <button
               onClick={() => {
-                dispatch({ type: "MARK_AS_NOT_SPAM", payload: mId });
+                dispatch({ type: "MARK_AS_NOT_SPAM", payload: { mId } });
               }}
             >
               Report Not Spam
+            </button>
+            <button
+              onClick={() => {
+                dispatch({
+                  type: "DELETE_MAIL",
+                  payload: { mId, from: "spamMails" },
+                });
+              }}
+            >
+              Delete
             </button>
           </div>
         ))}
