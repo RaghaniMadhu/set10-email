@@ -14,6 +14,21 @@ const MailsContextProvider = ({ children }) => {
         );
         return { ...mails, [action.payload.from]: modifiedEmails };
       }
+      case "STAR_UNSTAR_IND_MAIL": {
+        const modifiedEmails = mails[mails.requiredMailFrom].map((eachMail) =>
+          eachMail.mId === action.payload.mId
+            ? { ...eachMail, isStarred: !eachMail.isStarred }
+            : eachMail
+        );
+        const mail = mails[mails.requiredMailFrom].find(
+          ({ mId }) => mId === action.payload.mId
+        );
+        return {
+          ...mails,
+          requiredMail: mail,
+          [mails.requiredMailFrom]: modifiedEmails,
+        };
+      }
       case "READ_UNREAD_MAIL": {
         const modifiedEmails = mails[action.payload.from].map((eachMail) =>
           eachMail.mId === action.payload.mId
@@ -21,6 +36,21 @@ const MailsContextProvider = ({ children }) => {
             : eachMail
         );
         return { ...mails, [action.payload.from]: modifiedEmails };
+      }
+      case "READ_UNREAD_IND_MAIL": {
+        const modifiedEmails = mails[mails.requiredMailFrom].map((eachMail) =>
+          eachMail.mId === action.payload.mId
+            ? { ...eachMail, unread: !eachMail.unread }
+            : eachMail
+        );
+        const mail = mails[mails.requiredMailFrom].find(
+          ({ mId }) => mId === action.payload.mId
+        );
+        return {
+          ...mails,
+          requiredMail: mail,
+          [mails.requiredMailFrom]: modifiedEmails,
+        };
       }
       case "MARK_AS_SPAM": {
         const spamMail = mails.emails.find(
@@ -84,7 +114,11 @@ const MailsContextProvider = ({ children }) => {
         const mail = mails[action.payload.from].find(
           ({ mId }) => mId === action.payload.mId
         );
-        return { ...mails, requiredMail: mail };
+        return {
+          ...mails,
+          requiredMail: mail,
+          requiredMailFrom: action.payload.from,
+        };
       }
       default:
         return mails;
@@ -96,6 +130,7 @@ const MailsContextProvider = ({ children }) => {
     spamMails: [],
     trashMails: [],
     requiredMail: {},
+    requiredMailFrom: "",
   });
 
   return (

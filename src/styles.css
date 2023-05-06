@@ -1,5 +1,48 @@
 .App {
-  /* font-family: sans-serif; */
   font-family: "Times New Roman", Times, serif;
-  /* text-align: center; */
+}
+
+.sidebar {
+  position: absolute;
+  list-style-type: none;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  padding-inline-start: 10px;
+}
+
+.sidebar li {
+  padding-bottom: 2rem;
+}
+
+.email-box {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.mail {
+  border: 1px solid black;
+  margin: 5px;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+.boxes {
+  margin-left: 170px;
+}
+
+button {
+  padding: 5px;
+}
+
+.star-delete-read-buttons {
+  position: absolute;
+  border-radius: 5px;
+}
+
+.no-mails-heading {
+  text-align: center;
+  background-color: lightgray;
+  padding: 1rem;
+  border-radius: 5px;
 }

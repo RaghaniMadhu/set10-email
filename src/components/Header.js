@@ -1,12 +1,11 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MailsContext } from "../contexts/MailsContext";
 
 const getActiveStyle = ({ isActive }) => ({
-  margin: "1rem 0",
   fontWeight: isActive ? "600" : "200",
-  padding: isActive ? "1rem" : "0.5rem",
-  color: isActive ? "red" : "",
+  color: isActive ? "red" : "black",
+  textDecoration: "none",
 });
 
 export default function Header() {
@@ -15,18 +14,27 @@ export default function Header() {
   } = useContext(MailsContext);
 
   return (
-    <nav>
-      <NavLink to="/" style={getActiveStyle}>
-        Inbox({emails.length})
-      </NavLink>{" "}
-      ||{" "}
-      <NavLink to="/spam" style={getActiveStyle}>
-        Spam({spamMails.length})
-      </NavLink>{" "}
-      ||{" "}
-      <NavLink to="/trash" style={getActiveStyle}>
-        Trash({trashMails.length})
-      </NavLink>
-    </nav>
+    <div>
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <h1 style={{ textAlign: "center" }}>MadhuRaghani's Mail Box</h1>
+      </Link>
+      <ul className="sidebar">
+        <li>
+          <NavLink to="/" style={getActiveStyle}>
+            Inbox({emails.length})
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/spam" style={getActiveStyle}>
+            Spam({spamMails.length})
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/trash" style={getActiveStyle}>
+            Trash({trashMails.length})
+          </NavLink>
+        </li>
+      </ul>
+    </div>
   );
 }
