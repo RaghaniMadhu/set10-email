@@ -20,7 +20,7 @@ const MailsContextProvider = ({ children }) => {
             ? { ...eachMail, isStarred: !eachMail.isStarred }
             : eachMail
         );
-        const mail = mails[mails.requiredMailFrom].find(
+        const mail = modifiedEmails.find(
           ({ mId }) => mId === action.payload.mId
         );
         return {
@@ -43,7 +43,7 @@ const MailsContextProvider = ({ children }) => {
             ? { ...eachMail, unread: !eachMail.unread }
             : eachMail
         );
-        const mail = mails[mails.requiredMailFrom].find(
+        const mail = modifiedEmails.find(
           ({ mId }) => mId === action.payload.mId
         );
         return {

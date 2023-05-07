@@ -2,8 +2,40 @@
   font-family: "Times New Roman", Times, serif;
 }
 
+.mailBoxHeader {
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
+.mainApp {
+  display: flex;
+}
+
+.subject-and-buttons-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-div {
+  display: flex;
+  gap: 4px;
+}
+
+.page-div {
+  flex-grow: 1;
+}
+
+.details-and-a-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-p {
+  margin-block-start: 0rem;
+}
+
 .sidebar {
-  position: absolute;
   list-style-type: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -11,13 +43,7 @@
 }
 
 .sidebar li {
-  padding-bottom: 2rem;
-}
-
-.email-box {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  padding: 1.5rem 1.5rem 1.5rem 0;
 }
 
 .mail {
@@ -27,17 +53,13 @@
   border-radius: 5px;
 }
 
-.boxes {
-  margin-left: 170px;
-}
-
 button {
   padding: 5px;
 }
 
 .star-delete-read-buttons {
-  position: absolute;
   border-radius: 5px;
+  height: fit-content;
 }
 
 .no-mails-heading {
@@ -45,4 +67,17 @@ button {
   background-color: lightgray;
   padding: 1rem;
   border-radius: 5px;
+}
+
+.navlinks {
+  font-weight: 200;
+  color: black;
+  text-decoration: none;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+}
+
+.active {
+  font-weight: 600;
+  color: red;
+  border-right: 5px solid black;
 }

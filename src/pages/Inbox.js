@@ -29,7 +29,7 @@ export default function Inbox() {
     : unReadMails;
 
   return (
-    <div className="boxes">
+    <div className="page-div">
       {emails.length === 0 ? (
         <h3 className="no-mails-heading">No Conversations in Inbox.</h3>
       ) : (
@@ -62,7 +62,7 @@ export default function Inbox() {
             </label>
           </fieldset>
           <h4>Unread: {unReadMailsCount}</h4>
-          <div className="email-box">
+          <div>
             {filteredMails.map(
               ({ mId, unread, isStarred, subject, content }) => (
                 <div
@@ -70,81 +70,84 @@ export default function Inbox() {
                   className="mail"
                   style={{ backgroundColor: unread || "lightgray" }}
                 >
-                  <button
-                    className="star-delete-read-buttons"
-                    style={{ right: "25px" }}
-                    onClick={() => {
-                      dispatch({
-                        type: "STAR_UNSTAR_MAIL",
-                        payload: { mId, from: "emails" },
-                      });
-                    }}
-                  >
-                    {/* Star/Unstar */}
-                    {isStarred ? (
-                      <box-icon name="star" type="solid"></box-icon>
-                    ) : (
-                      <box-icon name="star" type="regular"></box-icon>
-                    )}
-                  </button>
-                  <button
-                    className="star-delete-read-buttons"
-                    style={{ right: "75px" }}
-                    onClick={() => {
-                      dispatch({
-                        type: "READ_UNREAD_MAIL",
-                        payload: { mId, from: "emails" },
-                      });
-                    }}
-                  >
-                    {/* Mark as Read/Unread */}
-                    {unread ? (
-                      <box-icon name="envelope"></box-icon>
-                    ) : (
-                      <box-icon name="envelope-open"></box-icon>
-                    )}
-                  </button>
-                  <button
-                    className="star-delete-read-buttons"
-                    style={{ right: "125px" }}
-                    onClick={() => {
-                      dispatch({
-                        type: "DELETE_MAIL",
-                        payload: { mId, from: "emails" },
-                      });
-                    }}
-                  >
-                    {/* Delete */}
-                    <box-icon name="trash"></box-icon>
-                  </button>
-                  <button
-                    style={{ position: "absolute", right: "175px" }}
-                    onClick={() => {
-                      dispatch({
-                        type: "MARK_AS_SPAM",
-                        payload: { mId, from: "emails" },
-                      });
-                    }}
-                  >
-                    {/* Report Spam */}
-                    <box-icon name="error-alt"></box-icon>
-                  </button>
-                  <h3 style={{ marginBlockStart: "0rem" }}>
-                    Subject: {subject}
-                  </h3>
-                  <p>{content}</p>
-                  <Link to={"/mail/" + mId}>
-                    <button
-                      onClick={() => {
-                        dispatch({
-                          type: "VIEW_DETAILS_OF_MAIL",
-                          payload: { mId, from: "emails" },
-                        });
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </Link>
+                  <div className="subject-and-buttons-div">
+                    <h3 style={{ marginBlockStart: "0rem" }}>
+                      Subject: {subject}
+                    </h3>
+                    <div className="buttons-div">
+                      <button
+                        className="star-delete-read-buttons"
+                        onClick={() => {
+                          dispatch({
+                            type: "STAR_UNSTAR_MAIL",
+                            payload: { mId, from: "emails" },
+                          });
+                        }}
+                      >
+                        {/* Star/Unstar */}
+                        {isStarred ? (
+                          <box-icon name="star" type="solid"></box-icon>
+                        ) : (
+                          <box-icon name="star" type="regular"></box-icon>
+                        )}
+                      </button>
+                      <button
+                        className="star-delete-read-buttons"
+                        onClick={() => {
+                          dispatch({
+                            type: "READ_UNREAD_MAIL",
+                            payload: { mId, from: "emails" },
+                          });
+                        }}
+                      >
+                        {/* Mark as Read/Unread */}
+                        {unread ? (
+                          <box-icon name="envelope"></box-icon>
+                        ) : (
+                          <box-icon name="envelope-open"></box-icon>
+                        )}
+                      </button>
+                      <button
+                        className="star-delete-read-buttons"
+                        onClick={() => {
+                          dispatch({
+                            type: "DELETE_MAIL",
+                            payload: { mId, from: "emails" },
+                          });
+                        }}
+                      >
+                        {/* Delete */}
+                        <box-icon name="trash"></box-icon>
+                      </button>
+                      <button
+                        className="star-delete-read-buttons"
+                        onClick={() => {
+                          dispatch({
+                            type: "MARK_AS_SPAM",
+                            payload: { mId, from: "emails" },
+                          });
+                        }}
+                      >
+                        {/* Report Spam */}
+                        <box-icon name="error-alt"></box-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="content-p">{content}</p>
+                    <Link to={"/mail/" + mId}>
+                      <button
+                        onClick={() => {
+                          dispatch({
+                            type: "VIEW_DETAILS_OF_MAIL",
+                            payload: { mId, from: "emails" },
+                          });
+                        }}
+                      >
+                        View Details
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               )
             )}
